@@ -3,20 +3,23 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 import torchvision.transforms as transforms
-#read the image
+
 
 class importData(Dataset):
-
-    def __init__(self, csvFile):
-        self.csvFile = pd.read_csv(csvFile)
+    def __init__(self, csvFile, transforms=None):
+        self.data = pd.read_csv(csvFile)
+        self.transforms = transforms
 
     def __len__(self):
-        return len(self.csvFile)
+        return len(self.data)
 
-    def __getitem__(self, item):
-        image = Image.open(self.csvFile.iloc[item, 1])
-        label = torch.Tensor(self.csvFile.iloc[item, 0])
-        image = transforms.ToTensor()(image)
+    def __getitem__(self, idx):
+        img_path = self.data.iloc[idx, 1]
+        label = torch.tensor(int(self.data.iloc[idx, 0]))
+        image = Image.open(img_path)
+
+        if self.transforms:
+            image = self.transforms(image)
 
         return (image, label)
 

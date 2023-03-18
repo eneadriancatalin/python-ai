@@ -5,7 +5,7 @@ from loadData import importData
 from torch.utils.data import DataLoader
 from torch import optim
 from tqdm import tqdm
-
+from torchvision import transforms
 class CNN(nn.Module):
     def __init__(self, inChannel=1, numClasses=10):
         super(CNN, self).__init__()
@@ -45,8 +45,15 @@ learning_rate = 0.001
 batch_size = 64
 num_epochs = 5
 
-training_dataset = importData(csvFile="./mnist/dataset_training.csv")
-testing_dataset = importData(csvFile="./mnist/dataset_testing.csv")
+data_transforms = transforms.Compose([
+    transforms.Resize((28, 28)),
+    transforms.ToTensor()
+])
+
+training_dataset = importData(csvFile="./mnist/dataset_training.csv", transforms=transforms.ToTensor())
+testing_dataset = importData(csvFile="./mnist/dataset_testing.csv", transforms=transforms.ToTensor())
+
+
 training_loader = DataLoader(dataset=training_dataset, batch_size=batch_size, shuffle=True)
 testing_loader = DataLoader(dataset=testing_dataset, batch_size=batch_size, shuffle=True)
 
