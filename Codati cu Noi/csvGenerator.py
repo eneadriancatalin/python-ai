@@ -11,4 +11,5 @@ for name in ['training', 'testing']:
             print(path)
             for file in os.listdir(path):
                 if file.endswith(".jpg"):
-                    csvfile.write("{},{}\n".format(i, (path + file)[1:]))
+                    print()
+                    csvfile.write("{},{}".format(i, "{}/{}\n".format(path, file)))

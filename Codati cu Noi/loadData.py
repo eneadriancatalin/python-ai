@@ -16,7 +16,7 @@ class importData(Dataset):
     def __getitem__(self, item):
         image = Image.open(self.csvFile.iloc[item, 1])
         label = torch.Tensor(self.csvFile.iloc[item, 0])
-        image = transforms.ToTorch()(image)
+        image = transforms.ToTensor()(image)
 
         return (image, label)
 
