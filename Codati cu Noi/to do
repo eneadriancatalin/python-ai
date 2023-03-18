@@ -1,0 +1,6 @@
+create csv
+create tensor from csv
+data visualizer  -  img + label
+put tensor into dataset
+dataset into dataloader
+train model on dataset from dataloader
