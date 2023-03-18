@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 from PIL import Image
 from torch.utils.data import Dataset
+import torchvision.transforms as transforms
 #read the image
 
 class importData(Dataset):
@@ -15,8 +16,7 @@ class importData(Dataset):
     def __getitem__(self, item):
         image = Image.open(self.csvFile.iloc[item, 1])
         label = torch.Tensor(self.csvFile.iloc[item, 0])
-        image = self.tranforms.ToTorch()(image)
+        image = transforms.ToTorch()(image)
 
         return (image, label)
-
 
